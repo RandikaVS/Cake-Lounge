@@ -3,6 +3,8 @@ const dotenv = require("dotenv");
 const cors = require("cors");
 const userRoutes = require("./routes/userRoutes");
 const shopRoutes = require("./routes/shopRoutes");
+const productRoutes = require("./routes/productRoutes");
+const orderRoutes = require("./routes/orderRoutes");
 const app = express();
 const {chats} = require("./data/data");
 const chatRoutes = require("./routes/chatRoutes");
@@ -96,6 +98,8 @@ app.use("/api/user",userRoutes);
 app.use("/api/shop",shopRoutes);
 app.use("/api/chat",chatRoutes);
 app.use("/api/message",messageRoutes); 
+app.use("/api/product",productRoutes);
+app.use("/api/order",orderRoutes);
 
 app.use(notFound);
 app.use(errorHandler);

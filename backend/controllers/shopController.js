@@ -5,15 +5,19 @@ const genarateToken = require("../db/genarateToken");
 const { green } = require('colors');
 
 
-const createShop = asyncHandler(async(req,res)=>{
+const createShop = asyncHandler( async(req,res)=>{
 
-    const{shopName,shopAddress,shopDescription,province,postalCode,idNumber,contactNumber,userId,shopLogo}=req.body;
+    const{userId,shopName,shopAddress,shopDescription,shopProvince,shopLogo}=req.body;
 
-    if(!shopName || !shopAddress || !shopDescription || !province || !postalCode || !idNumber || !contactNumber || !userId){
+    if(!shopName || !shopAddress || !shopDescription || !shopProvince || !userId){
+
+        console.log("All data not received".red.bold);
         res.status(400);
         throw new error("Please fill all the fields!!!");
+
     }
-    const shopExist = await Shop.findOne({userId});
+
+    const shopExist = await Shop.findOne({userId:{$in:userId}});
 
     if(shopExist){
         console.log("Shop already exist !!!".red.bold);
@@ -25,30 +29,26 @@ const createShop = asyncHandler(async(req,res)=>{
         shopName,
         shopAddress,
         shopDescription,
-        province,
-        postalCode,
-        idNumber,
-        contactNumber,
+        shopProvince,
         userId,
         shopLogo,
     });
+
     const updateUser = await User.findByIdAndUpdate(userId,{
         shopAvailability:1
     },
     {
         new: true,
-    })
-    if(shop && updateUser){
+    });
+
+    if(shop){
         res.status(201).json({
 
             _id:shop._id,
             shopName:shop.shopName,
             shopAddress:shop.shopAddress,
             shopDescription:shop.shopDescription,
-            province:shop.province,
-            postalCode:shop.postalCode,
-            idNumber:shop.idNumber,
-            contactNumber:shop.contactNumber,
+            shopProvince:shop.shopProvince,
             shopLogo:shop.shopLogo,
             rank:shop.rank,
             userId:shop.userId,
@@ -61,40 +61,42 @@ const createShop = asyncHandler(async(req,res)=>{
             
     }
 
-})
+});
 
 const deleteShop = asyncHandler(async(req,res)=>{
 
-    const {_id,shopName}=req.body;
-    if(!_id){
+    const {shopId}=req.body;
+    console.log(shopId);
+    if(!shopId){
         console.log('Invalid data passes into backend request');
         return res.sendStatus(400);
-    }
+    }else{
 
     try {
 
-        const shop = await Shop.findOneAndDelete({_id:_id});
+        const shop = await Shop.findOneAndDelete({_id:shopId});
 
         if(shop){
             res.status(201).json({
-                _id:_id,
-                shopName:shopName,
-
-             });
+                shopId:shopId
+            })
+            console.log('Shop deleted');
         }
         
     } catch (error) {
         res.status(400);
         throw new error("Error while deleting shop !!!"+error.message);
     }
+}
 
 })
 
 const updateShop = asyncHandler(async(req,res)=>{
 
-    const{shopId,shopName,shopAddress,shopDescription,province,postalCode,idNumber,contactNumber,shopLogo}=req.body;
+    const{shopId,shopName,shopAddress,shopDescription,shopProvince,shopLogo}=req.body;
+    console.log(shopId+shopName+shopAddress+shopDescription+shopProvince);
 
-    if(!shopName || !shopAddress || !shopDescription || !province || !postalCode || !contactNumber || !shopLogo){
+    if(!shopName ||!shopAddress || !shopDescription || !shopProvince || !shopId){
          res.status(400);
         throw new error("Invalid data passes into backend request!!!");
     }else{
@@ -102,30 +104,27 @@ const updateShop = asyncHandler(async(req,res)=>{
             shopName:shopName,
             shopAddress:shopAddress,
             shopDescription:shopDescription,
-            postalCode:postalCode,
-            idNumber:idNumber,
-            contactNumber:contactNumber,
+            shopProvince:shopProvince,
             shopLogo:shopLogo,
         },
         {
-      new: true,
+            new: true,
         });
 
         if(updateShop){
             res.status(201).json({
-            shopId: shopId,
+             _id:updateShop._id,
             shopName:updateShop.shopName,
             shopAddress:updateShop.shopAddress,
             shopDescription:updateShop.shopDescription,
-            province:updateShop.province,
-            postalCode:updateShop.postalCode,
-            idNumber:updateShop.idNumber,
-            contactNumber:updateShop.contactNumber,
+            shopProvince:updateShop.shopProvince,
+            shopLogo:updateShop.shopLogo,
+            rank:updateShop.rank,
             userId:updateShop.userId,
-            shopLogo:updateShop.shopLogo
+            token:genarateToken(updateShop._id),
             })
 
-            //console.log(updateShop);
+            console.log(updateShop);
         }else{
         res.status(400);
         throw new error("Shop not updated !!!");
@@ -148,9 +147,8 @@ console.log("Fetch shop".red.bold);
             shopAddress:shop.shopAddress,
             shopDescription:shop.shopDescription,
             province:shop.province,
-            postalCode:shop.postalCode,
-            idNumber:shop.idNumber,
-            contactNumber:shop.contactNumber,
+            rank:shop.rank,
+            blockedStatus:shop.blockedStatus,
             userId:shop.userId,
             shopLogo:shop.shopLogo,
         });
@@ -161,4 +159,4 @@ console.log("Fetch shop".red.bold);
         throw new error("Error fetching shop");
     }
 })
-module.exports = {createShop, deleteShop, updateShop, fetchShop}
+module.exports = {createShop, deleteShop, updateShop,fetchShop}

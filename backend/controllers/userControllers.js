@@ -1,8 +1,10 @@
 const asyncHandler = require('express-async-handler');
+const { terminal } = require("terminal-kit");
 const User = require("../models/userModel");
 const genarateToken = require("../db/genarateToken");
 const bcrypt = require('bcryptjs');
 const { green } = require('colors');
+const Product = require('../models/productModel');
 
 const registerUser = asyncHandler( async(req,res) =>{
 
@@ -183,4 +185,46 @@ const updateUserPassword = asyncHandler(async(req,res)=>{
     }
     }
 })
-module.exports = {registerUser,authUser,allUsers,updateUser,updateUserPassword}
+
+const deleteUser = asyncHandler( async(req,res)=>{
+
+    const {userId}=req.body;
+    console.log(userId);
+     if(!userId){
+        console.log('Invalid data passes into backend request');
+        return res.sendStatus(400);
+    }else{
+        try {
+
+            const user = await User.findOneAndDelete({_id:userId});
+
+            if(user){
+            res.status(201).json({
+                userId:user._id
+            })
+            console.log('User deleted');
+        }
+            
+        } catch (error) {
+            res.status(400);
+        throw new error("Error while deleting user !!!"+error.message);
+            
+        }
+    }
+
+
+})
+
+const fetchAllProducts = async () => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      await Product.find({}).then((result) => {
+        resolve(result);
+      });
+    } catch (error) {
+      terminal.red.bold("[Cake Lounge Backend] ", error);
+      reject(error);
+    }
+  });
+};
+module.exports = {registerUser,authUser,allUsers,updateUser,updateUserPassword,deleteUser,fetchAllProducts}

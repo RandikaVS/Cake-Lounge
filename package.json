@@ -1,20 +1,29 @@
 {
   "dependencies": {
+    "@react-pdf/renderer": "^2.1.1",
     "bcryptjs": "^2.4.3",
     "colors": "^1.4.0",
     "express-async-handler": "^1.2.0",
     "form-data": "^4.0.0",
     "jsonwebtoken": "^8.5.1",
+    "jspdf": "^2.5.1",
+    "jspdf-autotable": "^3.5.23",
     "mdb-react-ui-kit": "^3.0.0",
     "moongoose": "^0.0.5",
+    "polyfills": "^2.1.1",
     "react-bootstrap": "^2.2.3",
     "react-icons": "^4.3.1",
     "react-router-dom": "^6.3.0",
     "react-tabs": "^4.2.1",
+    "react-to-pdf": "^0.0.14",
     "socket.io": "^4.5.0"
   },
   "optionalDependencies": {
     "bufferutil": "^4.0.6",
     "utf-8-validate": "^5.0.9"
+  },
+  "devDependencies": {
+    "@putout/plugin-webpack": "^1.4.0",
+    "putout": "^26.8.0"
   }
 }

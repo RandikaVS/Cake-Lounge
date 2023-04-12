@@ -1,0 +1,75 @@
+@import url("https://fonts.googleapis.com/css2?family=Pacifico&family=Raleway+Dots&display=swap");
+:root {
+  --white: #fff;
+  --primary-pink: #ff5c8d;
+  --primary-grey: #ffffffb6;
+  --primary-blue: #0d6efd;
+}
+
+.custom-above-navbar-section div span {
+  font-size: 13px !important;
+  padding: 2px 0 2px 0;
+}
+
+.custom-above-navbar-section .container-1 {
+  float: left;
+}
+
+.custom-above-navbar-section .container-2 {
+  float: right;
+  cursor: pointer;
+}
+
+.custom-above-navbar-section .container-2 div {
+  margin: 0 5px 0 5px;
+}
+
+.custom-above-navbar-section .container-2 img {
+  aspect-ratio: 1/1;
+  height: 15px;
+}
+
+.custom-navbar h1 {
+  font: bold 40px "Pacifico", cursive !important;
+  color: var(--primary-pink);
+  -ms-flex-item-align: center;
+      -ms-grid-row-align: center;
+      align-self: center;
+}
+
+.custom-navbar form {
+  height: 45px;
+  width: 40vw;
+  -ms-flex-item-align: center;
+      -ms-grid-row-align: center;
+      align-self: center;
+  -webkit-box-shadow: none;
+          box-shadow: none;
+}
+
+.custom-navbar form button {
+  min-width: initial !important;
+  background-color: var(--white) !important;
+  color: black !important;
+}
+
+.custom-navbar a {
+  font-size: 16px !important;
+  text-decoration: none;
+  -ms-flex-item-align: center;
+      -ms-grid-row-align: center;
+      align-self: center;
+  margin-left: 13px;
+  color: var(--primary-blue) !important;
+}
+
+.custom-navbar-user-image {
+  -ms-flex-item-align: center !important;
+      -ms-grid-row-align: center !important;
+      align-self: center !important;
+  -ms-flex-item-align: end;
+      align-self: flex-end;
+  aspect-ratio: 1/1 !important;
+  height: 33px !important;
+  width: 33px !important;
+}

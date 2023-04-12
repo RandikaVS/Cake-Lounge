@@ -1,0 +1,27 @@
+.profilePage{
+    background-image: url(../Asserts/cake.jpg);
+}
+.top {
+    margin-left: 550px;
+    margin-top: 60px;
+
+}
+.rounded-circle{
+    width: 200px;
+    height: 200px;
+    margin-left: 30px;
+}
+.top a{
+    display: block;
+    margin-left: 80px;
+}
+.top2{
+    font-size: small;
+}
+.VerticalLine{
+    height: 20px;
+}
+.profilePage{
+    width: 100%;
+    background-color: white;
+}
